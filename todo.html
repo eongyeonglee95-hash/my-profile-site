@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투두 리스트</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f4f4f7;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+    margin: 0;
+  }
+  .app {
+    background: #fff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    padding: 24px;
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 16px;
+    color: #222;
+  }
+  form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #6c5ce7;
+  }
+  button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #6c5ce7;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  button:hover { background: #5b4bd6; }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 4px;
+    border-bottom: 1px solid #eee;
+  }
+  li:last-child { border-bottom: none; }
+  li span.text {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    word-break: break-all;
+  }
+  li span.date {
+    font-size: 12px;
+    color: #bbb;
+    white-space: nowrap;
+  }
+  li.done span.text {
+    text-decoration: line-through;
+    color: #aaa;
+  }
+  li .delete-btn {
+    background: none;
+    color: #bbb;
+    padding: 4px 8px;
+    font-size: 16px;
+  }
+  li .delete-btn:hover { color: #e74c3c; }
+  .empty {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    padding: 20px 0;
+  }
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+  #clear-completed {
+    background: none;
+    color: #999;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  #clear-completed:hover { color: #6c5ce7; }
+</style>
+</head>
+<body>
+  <div class="app">
+    <h1>오늘의 할 일</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="할 일을 입력하세요" autocomplete="off">
+      <button type="submit">추가</button>
+    </form>
+    <ul id="todo-list"></ul>
+    <p class="empty" id="empty-msg">할 일이 없습니다.</p>
+    <div class="toolbar">
+      <button type="button" id="clear-completed">완료된 항목 삭제</button>
+    </div>
+  </div>
+
+<script>
+  const form = document.getElementById('todo-form');
+  const input = document.getElementById('todo-input');
+  const list = document.getElementById('todo-list');
+  const emptyMsg = document.getElementById('empty-msg');
+  const clearCompletedBtn = document.getElementById('clear-completed');
+
+  let todos = JSON.parse(localStorage.getItem('todos') || '[]');
+
+  function save() {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }
+
+  // TODO(human): createdAt(timestamp)을 받아 항목 옆에 보여줄 날짜 문자열로 포맷하는 함수 구현
+  function formatDate(timestamp) {
+
+  }
+
+  function render() {
+    list.innerHTML = '';
+    emptyMsg.style.display = todos.length ? 'none' : 'block';
+
+    todos.forEach((todo, i) => {
+      const li = document.createElement('li');
+      if (todo.done) li.classList.add('done');
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = todo.done;
+      checkbox.addEventListener('change', () => {
+        todos[i].done = checkbox.checked;
+        save();
+        render();
+      });
+
+      const span = document.createElement('span');
+      span.className = 'text';
+      span.textContent = todo.text;
+
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'date';
+      dateSpan.textContent = formatDate(todo.createdAt);
+
+      const delBtn = document.createElement('button');
+      delBtn.textContent = '✕';
+      delBtn.className = 'delete-btn';
+      delBtn.type = 'button';
+      delBtn.addEventListener('click', () => {
+        todos.splice(i, 1);
+        save();
+        render();
+      });
+
+      li.append(checkbox, span, dateSpan, delBtn);
+      list.appendChild(li);
+    });
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    todos.push({ text, done: false, createdAt: Date.now() });
+    input.value = '';
+    save();
+    render();
+  });
+
+  clearCompletedBtn.addEventListener('click', () => {
+    todos = todos.filter(todo => !todo.done);
+    save();
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>

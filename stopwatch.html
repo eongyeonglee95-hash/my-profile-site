@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스톱워치</title>
+  <!-- Tailwind CSS를 CDN에서 불러옵니다 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 flex items-center justify-center">
+
+  <!-- 전체를 감싸는 카드 -->
+  <div class="bg-white rounded-2xl shadow-lg p-8 w-80 text-center">
+
+    <h1 class="text-xl font-bold text-slate-700 mb-6">스톱워치</h1>
+
+    <!-- 시간을 보여주는 자리. id="display"로 이름표를 붙여서
+         자바스크립트가 여기 글자를 계속 바꿔가며 시간을 갱신함 -->
+    <p id="display" class="text-5xl font-mono font-extrabold text-blue-600 mb-8">
+      00:00:00
+    </p>
+
+    <div class="flex justify-center gap-3">
+      <!-- 시작/일시정지는 하나의 버튼이 상태에 따라 역할이 바뀜.
+           id="toggleBtn"으로 이름표를 붙여서 글자와 색을 바꿀 수 있게 함 -->
+      <button id="toggleBtn" onclick="toggleTimer()"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition">
+        시작
+      </button>
+
+      <button onclick="resetTimer()"
+        class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2 px-6 rounded-lg transition">
+        리셋
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // 지금까지 흐른 시간(밀리초 단위)을 기억하는 변수
+    let elapsedMs = 0;
+
+    // setInterval이 만들어주는 "타이머 번호표". 이 번호로 나중에 타이머를 멈출 수 있음
+    let timerId = null;
+
+    // 타이머가 지금 돌아가는 중인지(true) 멈춰있는지(false) 기억하는 변수
+    let isRunning = false;
+
+    // 화면 속 시간 표시(id="display")와 버튼(id="toggleBtn")을 미리 찾아서 변수에 저장
+    const displayEl = document.getElementById('display');
+    const toggleBtnEl = document.getElementById('toggleBtn');
+
+    // 밀리초 숫자를 "00:00:00" 형식의 글자로 바꿔주는 함수
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000); // 밀리초를 초 단위로 내림
+
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      // padStart(2, '0'): 숫자가 한 자리면 앞에 '0'을 붙여서 항상 두 자리로 만듦 (예: 5 -> "05")
+      const pad = (num) => String(num).padStart(2, '0');
+
+      return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    // elapsedMs 값을 기준으로 화면 표시 글자를 새로 갱신하는 함수
+    function updateDisplay() {
+      displayEl.textContent = formatTime(elapsedMs);
+    }
+
+    // 시작/일시정지 버튼을 누르면 실행되는 함수
+    function toggleTimer() {
+      if (isRunning) {
+        // 지금 돌아가는 중이면 -> 멈춤
+        clearInterval(timerId); // 타이머 번호표로 반복 실행을 멈춤
+        isRunning = false;
+        toggleBtnEl.textContent = '시작';
+      } else {
+        // 지금 멈춰있으면 -> 시작
+        // startTime: "시작 버튼을 누른 순간"의 시각을 기록.
+        // 이미 흐른 시간(elapsedMs)만큼 빼줘서, 일시정지했다가 다시 시작해도 이어서 흐르게 함
+        const startTime = Date.now() - elapsedMs;
+
+        // setInterval: 괄호 안 함수를 10밀리초마다 계속 반복 실행함
+        timerId = setInterval(() => {
+          elapsedMs = Date.now() - startTime; // 지금 시각 - 시작 시각 = 흐른 시간
+          updateDisplay();
+        }, 10);
+
+        isRunning = true;
+        toggleBtnEl.textContent = '일시정지';
+      }
+    }
+
+    // 리셋 버튼을 누르면 실행되는 함수
+    function resetTimer() {
+      clearInterval(timerId); // 혹시 돌아가는 중이었다면 멈춤
+      isRunning = false;
+      elapsedMs = 0;
+      toggleBtnEl.textContent = '시작';
+      updateDisplay();
+    }
+  </script>
+
+</body>
+</html>
