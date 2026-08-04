@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>이언경 | 풀스택 개발자</title>
+<meta name="description" content="풀스택 개발자 이언경의 포트폴리오 사이트" />
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Pretendard', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          ivory: '#FBF6EC',
+          brand: {
+            50: '#fffbeb',
+            100: '#fef3c7',
+            200: '#fde68a',
+            300: '#fcd34d',
+            400: '#fbbf24',
+            500: '#f59e0b',
+            600: '#d97706',
+            700: '#b45309',
+            800: '#92400e',
+            900: '#78350f',
+          },
+        },
+      },
+    },
+  };
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  html { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-glow {
+    background: radial-gradient(circle at 30% 20%, rgba(245, 158, 11, 0.18), transparent 60%),
+                radial-gradient(circle at 80% 60%, rgba(217, 119, 6, 0.12), transparent 55%);
+  }
+</style>
+</head>
+<body class="bg-ivory text-stone-900 antialiased">
+
+  <!-- Header / Nav -->
+  <header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-ivory/80 border-b border-stone-200/60">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2 font-extrabold text-lg tracking-tight">
+        <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white flex items-center justify-center">이</span>
+        <span class="hidden sm:inline">이언경</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
+        <a href="#about" class="hover:text-brand-600 transition-colors">소개</a>
+        <a href="#skills" class="hover:text-brand-600 transition-colors">기술 스택</a>
+        <a href="#projects" class="hover:text-brand-600 transition-colors">프로젝트</a>
+        <a href="#contact" class="hover:text-brand-600 transition-colors">연락처</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="menu-toggle" type="button" aria-label="메뉴 열기" class="md:hidden w-9 h-9 rounded-full flex items-center justify-center text-stone-600 hover:bg-stone-100 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-stone-200 bg-white">
+      <div class="px-6 py-4 flex flex-col gap-4 text-sm font-medium text-stone-600">
+        <a href="#about" class="mobile-link">소개</a>
+        <a href="#skills" class="mobile-link">기술 스택</a>
+        <a href="#projects" class="mobile-link">프로젝트</a>
+        <a href="#contact" class="mobile-link">연락처</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero-glow relative pt-40 pb-24 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="fade-in-up inline-block px-4 py-1.5 mb-6 rounded-full text-sm font-semibold bg-brand-100 text-brand-700">
+        👋 안녕하세요, 반갑습니다
+      </p>
+      <h1 class="fade-in-up text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">
+        <span class="uppercase tracking-widest text-brand-600">이언경</span>입니다.<br />
+        <span class="text-2xl sm:text-3xl font-semibold text-stone-500 tracking-wide">풀스택 개발자</span>
+      </h1>
+      <p class="fade-in-up text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed mb-10">
+        사용자 경험을 중요하게 생각하는 풀스택 개발자입니다. 프론트엔드부터 백엔드까지 아이디어를
+        직접 구현하는 과정을 즐기며, 새로운 기술을 배우고 적용하는 데 거리낌이 없습니다.
+        함께 성장할 수 있는 팀에서 좋은 제품을 만들고 싶습니다.
+      </p>
+      <div class="fade-in-up flex flex-wrap items-center justify-center gap-4">
+        <a href="#projects" class="px-6 py-3 rounded-xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-600/20">
+          프로젝트 보기
+        </a>
+        <a href="#contact" class="px-6 py-3 rounded-xl border border-stone-300 font-semibold hover:bg-stone-50 transition-colors">
+          연락하기
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 px-6 border-t border-stone-100">
+    <div class="max-w-4xl mx-auto fade-in-up">
+      <h2 class="text-sm font-bold tracking-widest text-brand-600 uppercase mb-3">About</h2>
+      <p class="text-2xl sm:text-3xl font-bold leading-snug mb-6">
+        문제를 발견하고, 코드로 해결책을 만드는 과정을 좋아합니다.
+      </p>
+      <p class="text-stone-600 leading-relaxed">
+        (임시 자기소개 문구입니다. 실제 경력, 관심 분야, 강점 등을 자유롭게 수정해주세요.)
+        다양한 규모의 프로젝트에서 기획부터 배포까지 전 과정을 경험했고, 사용자 관점에서 더 나은
+        경험을 설계하는 것을 최우선으로 생각합니다. 꾸준한 학습과 코드 리뷰를 통해 성장하는 개발자가
+        되고자 합니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="py-20 px-6 bg-ivory">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-up mb-12 text-center">
+        <h2 class="text-sm font-bold tracking-widest text-brand-600 uppercase mb-3">Skills</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold">기술 스택</p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+        <div class="fade-in-up skill-card">
+          <span class="text-3xl">🧱</span>
+          <p class="mt-3 font-semibold">HTML</p>
+        </div>
+        <div class="fade-in-up skill-card">
+          <span class="text-3xl">🎨</span>
+          <p class="mt-3 font-semibold">CSS</p>
+        </div>
+        <div class="fade-in-up skill-card">
+          <span class="text-3xl">⚡</span>
+          <p class="mt-3 font-semibold">JavaScript</p>
+        </div>
+        <div class="fade-in-up skill-card">
+          <span class="text-3xl">⚛️</span>
+          <p class="mt-3 font-semibold">React</p>
+        </div>
+        <div class="fade-in-up skill-card">
+          <span class="text-3xl">💨</span>
+          <p class="mt-3 font-semibold">Tailwind CSS</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="fade-in-up mb-12 text-center">
+        <h2 class="text-sm font-bold tracking-widest text-brand-600 uppercase mb-3">Projects</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold">포트폴리오</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <article class="fade-in-up project-card">
+          <div class="h-36 rounded-xl bg-gradient-to-br from-stone-800 to-stone-950 border-l-4 border-brand-500 mb-5"></div>
+          <h3 class="font-bold text-lg mb-2">프로젝트 이름 1</h3>
+          <p class="text-sm text-stone-600 mb-4">
+            프로젝트에 대한 한 줄 설명을 여기에 작성해주세요.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="tag">React</span>
+            <span class="tag">Tailwind</span>
+          </div>
+          <div class="flex gap-4 text-sm font-semibold">
+            <a href="#" class="text-brand-600 hover:underline">GitHub</a>
+            <a href="#" class="text-brand-600 hover:underline">데모</a>
+          </div>
+        </article>
+
+        <article class="fade-in-up project-card">
+          <div class="h-36 rounded-xl bg-gradient-to-br from-stone-700 to-stone-900 border-l-4 border-brand-500 mb-5"></div>
+          <h3 class="font-bold text-lg mb-2">프로젝트 이름 2</h3>
+          <p class="text-sm text-stone-600 mb-4">
+            프로젝트에 대한 한 줄 설명을 여기에 작성해주세요.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Node.js</span>
+          </div>
+          <div class="flex gap-4 text-sm font-semibold">
+            <a href="#" class="text-brand-600 hover:underline">GitHub</a>
+            <a href="#" class="text-brand-600 hover:underline">데모</a>
+          </div>
+        </article>
+
+        <article class="fade-in-up project-card">
+          <div class="h-36 rounded-xl bg-gradient-to-br from-stone-800 to-black border-l-4 border-brand-500 mb-5"></div>
+          <h3 class="font-bold text-lg mb-2">프로젝트 이름 3</h3>
+          <p class="text-sm text-stone-600 mb-4">
+            프로젝트에 대한 한 줄 설명을 여기에 작성해주세요.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+          </div>
+          <div class="flex gap-4 text-sm font-semibold">
+            <a href="#" class="text-brand-600 hover:underline">GitHub</a>
+            <a href="#" class="text-brand-600 hover:underline">데모</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-24 px-6 bg-ivory">
+    <div class="max-w-2xl mx-auto text-center fade-in-up">
+      <h2 class="text-sm font-bold tracking-widest text-brand-600 uppercase mb-3">Contact</h2>
+      <p class="text-3xl sm:text-4xl font-extrabold mb-4">함께 이야기 나눠요</p>
+      <p class="text-stone-600 mb-10">
+        새로운 기회나 협업 제안은 언제든 환영합니다. 편하게 연락 주세요.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="mailto:eongyeonglee95@gmail.com" class="flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-600/20">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0a2.25 2.25 0 0 0-2.25-2.25H4.5A2.25 2.25 0 0 0 2.25 6.75m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+          이메일 보내기
+        </a>
+        <a href="https://github.com/eongyeonglee95" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-6 py-3 rounded-xl border border-stone-300 font-semibold hover:bg-stone-100 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.71 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.12 3.06.74.8 1.18 1.83 1.18 3.09 0 4.44-2.7 5.42-5.27 5.7.42.36.78 1.08.78 2.17 0 1.57-.02 2.83-.02 3.22 0 .3.21.66.79.55A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 px-6 text-center text-sm text-stone-500 border-t border-stone-100">
+    © <span id="year"></span> 이언경. All rights reserved.
+  </footer>
+
+  <style>
+    .mobile-link { padding: 0.25rem 0; }
+    .skill-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.75rem 1rem;
+      border-radius: 1rem;
+      background: white;
+      border: 1px solid rgb(226 232 240);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(217,119,6,0.25); }
+
+    .project-card {
+      padding: 1.5rem;
+      border-radius: 1.25rem;
+      background: white;
+      border: 1px solid rgb(226 232 240);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -12px rgba(217,119,6,0.2); }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      background: rgb(254 243 199);
+      color: rgb(146 64 14);
+    }
+  </style>
+
+  <script src="script.js"></script>
+</body>
+</html>
