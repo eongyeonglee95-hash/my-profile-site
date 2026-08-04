@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>할 일 목록</title>
+  <!-- Tailwind CSS를 CDN에서 불러옵니다 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+
+  <!-- 전체를 감싸는 카드 -->
+  <div class="bg-white rounded-2xl shadow-lg p-8 w-96">
+
+    <h1 class="text-xl font-bold text-slate-700 mb-6 text-center">할 일 목록</h1>
+
+    <!-- 입력 필드 + 추가 버튼을 가로로 배치하는 영역 -->
+    <div class="flex gap-2 mb-6">
+      <!-- id="todoInput"으로 이름표를 붙여서 자바스크립트에서 이 입력창의 값을 읽어올 수 있게 함 -->
+      <input
+        id="todoInput"
+        type="text"
+        placeholder="할 일을 입력하세요"
+        class="flex-1 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+      <button
+        onclick="addTodo()"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 rounded-lg transition"
+      >
+        추가
+      </button>
+    </div>
+
+    <!-- 할 일 목록이 실제로 그려질 자리. id="todoList"로 이름표를 붙여서
+         자바스크립트가 여기에 <li> 항목들을 추가/삭제하도록 함 -->
+    <ul id="todoList" class="space-y-2"></ul>
+
+  </div>
+
+  <script>
+    // 할 일 목록을 저장하는 배열(리스트). 각 항목은 { text: 내용, done: 완료여부 } 형태의 객체
+    let todos = [];
+
+    // 화면에 있는 입력창(id="todoInput")을 찾아서 변수에 저장해둠
+    const inputEl = document.getElementById('todoInput');
+
+    // 입력창에 커서가 있는 상태에서 키를 누를 때마다 실행됨
+    inputEl.addEventListener('keydown', function (event) {
+      // 누른 키가 Enter일 때만 addTodo() 실행
+      if (event.key === 'Enter') {
+        addTodo();
+      }
+    });
+
+    // 추가 버튼(또는 Enter)을 누르면 실행되는 함수
+    function addTodo() {
+      const text = inputEl.value.trim(); // 앞뒤 공백을 제거한 입력값
+
+      // 빈 문자열이면 아무 것도 하지 않고 함수 종료
+      if (text === '') return;
+
+      // todos 배열에 새 할 일을 추가. done: false는 "아직 완료 안 함"이라는 뜻
+      todos.push({ text: text, done: false });
+
+      inputEl.value = ''; // 입력창을 비워서 다음 입력을 편하게 함
+      renderTodos();      // 화면을 새로 그림
+    }
+
+    // 체크박스를 눌렀을 때: 해당 항목의 done 값을 반대로 뒤집음
+    function toggleTodo(index) {
+      todos[index].done = !todos[index].done;
+      renderTodos();
+    }
+
+    // 삭제 버튼을 눌렀을 때: 배열에서 해당 항목을 1개 제거
+    function deleteTodo(index) {
+      todos.splice(index, 1);
+      renderTodos();
+    }
+
+    // todos 배열 내용을 기준으로 화면의 <ul id="todoList"> 안을 통째로 다시 그리는 함수
+    function renderTodos() {
+      const listEl = document.getElementById('todoList');
+
+      // 이전에 그려져 있던 내용을 전부 지우고 새로 채움
+      listEl.innerHTML = '';
+
+      todos.forEach(function (todo, index) {
+        // 할 일 한 줄(li)을 만듦
+        const li = document.createElement('li');
+        li.className = 'flex items-center gap-3 bg-slate-50 rounded-lg px-3 py-2';
+
+        // done이 true면 취소선(line-through)과 회색 글자를 적용, 아니면 기본 색
+        const textClass = todo.done
+          ? 'flex-1 text-slate-400 line-through'
+          : 'flex-1 text-slate-700';
+
+        // 체크박스, 할 일 텍스트, 삭제 버튼을 한 줄의 HTML로 구성
+        li.innerHTML = `
+          <input type="checkbox" ${todo.done ? 'checked' : ''}
+            onchange="toggleTodo(${index})"
+            class="w-5 h-5 accent-blue-500 cursor-pointer">
+          <span class="${textClass}">${todo.text}</span>
+          <button onclick="deleteTodo(${index})"
+            class="text-red-400 hover:text-red-600 font-bold px-2">
+            삭제
+          </button>
+        `;
+
+        listEl.appendChild(li); // 완성된 한 줄을 목록에 붙여넣음
+      });
+    }
+  </script>
+
+</body>
+</html>
